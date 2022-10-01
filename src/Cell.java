@@ -14,10 +14,9 @@ public class Cell {
     /**
      * Constructeur par défaut qui définit content à VOID
      */
-    /**
-    Cell() {
+    public Cell() {
         this.content = type.EMPTY;
-    }*/
+    }
 
     /**
      * @return true si la Cell est VIDE, false sinon
@@ -48,6 +47,10 @@ public class Cell {
             case SNAKE -> '*';
             case PLAYER -> '^';
         };
+    }
+    @Override
+    public String toString() {
+        return "content : "+this.content+"("+this.draw()+")";
     }
 
 }

@@ -1,4 +1,4 @@
-import java.util.random.RandomGenerator;
+import java.lang.Math;
 
 public class Arena {
     private final int height;
@@ -14,17 +14,29 @@ public class Arena {
         this.height = height;
         this.width = width;
         board = new Cell[height][width];
-        init();
+        boardInit();
         genObstacle(0.1);
     }
 
-    private void init(){
-        for(int h = 0; h < this.height-1; h++) {
-            for(int w = 0; w < this.width-1; w++) {
+    /**
+     * Fonction initialisant les cellules de board
+     */
+    private void boardInit(){
+        for(int h = 0; h < this.height; h++) {
+            for(int w = 0; w < this.width; w++) {
                 Arena.board[h][w] = new Cell();
-                Arena.board[h][w].setContent(Cell.type.EMPTY);
             }
         }
+    }
+
+    /**
+     * Fonction renvoyant une position aléatoire dans l'intervale [min;max[
+     * @param min borne inférieure inclue de l'intervale
+     * @param max borne supérieur exclue de l'intervale
+     * @return valeur "aléatoire" comprise entre min et max
+     */
+    private int randomPos(int min, int max) {
+        return (int)(Math.random()*(max-min+1)+min);
     }
 
     /**
@@ -33,11 +45,11 @@ public class Arena {
      * @return Une cellule de type EMPTY
      */
     private Cell getRdmFreeCell() {
-        int h = RandomGenerator.getDefault().nextInt(0,this.height -1);
-        int w = RandomGenerator.getDefault().nextInt(0, this.width);
+        int h = randomPos(0,this.height-2);
+        int w = randomPos(0, this.width-1);
         while(!Arena.board[h][w].isFree()) {
-            h = RandomGenerator.getDefault().nextInt(0,this.height -1);
-            w = RandomGenerator.getDefault().nextInt(0, this.width);
+            h = randomPos(0,this.height-2);
+            w = randomPos(0, this.width-1);
         }
         return Arena.board[h][w];
     }
