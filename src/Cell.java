@@ -10,12 +10,20 @@ public class Cell {
         SNAKE,
         PLAYER
     }
+    private int x;
+    private int y;
+
+    // Getters
+    public int getX() {return x;}
+    public int getY() {return y;}
 
     /**
      * Constructeur par défaut qui définit content à VOID
      */
-    public Cell() {
+    public Cell(int x, int y) {
         this.content = type.EMPTY;
+        this.x = x;
+        this.y = y;
     }
 
     /**
@@ -24,6 +32,11 @@ public class Cell {
     boolean isFree() {
         return this.content == type.EMPTY;
     }
+
+    /**
+     * @return true si la Cell ne contient pas de bois, false sinon
+     */
+    boolean isNotWood() {return this.content != type.WOOD; }
 
     /**
      * Méthode qui définit le type de la Cell
@@ -37,20 +50,21 @@ public class Cell {
      * Fonction qui permet d'afficher le contenu de la Cell
      * @return char correspondant au type de la Cell
      */
-    char draw() {
+    String draw() {
         return switch (content) {
-            case EMPTY -> ' ';
-            case STRAWBERRY -> 'S';
-            case BLACKBERRY -> 'B';
-            case COIN -> 'C';
-            case WOOD -> 'W';
-            case SNAKE -> '*';
-            case PLAYER -> '^';
+            case EMPTY -> ".";
+            case STRAWBERRY -> "\u001B[31mS\u001B[37m"; // S en rouge
+            case BLACKBERRY -> "\u001B[34mB\u001B[37m"; // B en bleu
+            case COIN -> "\u001B[33mC\u001B[37m"; // C en jaune
+            case WOOD -> "\u001B[35mW\u001B[37m"; // W en violet
+            case SNAKE -> "\u001B[32m*\u001B[37m"; // * en vert
+            case PLAYER -> "\u001B[97m^\u001B[37m"; // ^ en blanc
         };
     }
     @Override
     public String toString() {
-        return "content : "+this.content+"("+this.draw()+")";
+        //return "content : "+this.content+"("+this.draw()+")";
+        return "("+this.x+","+this.y+") ";
     }
 
 }
